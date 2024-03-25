@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="sign up"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:id="@+id/headLine"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="    username:"
+        android:id="@+id/nameInput"
+        android:inputType="text" 
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="   email:"
+        android:id="@+id/emailInput"
+        android:inputType="text" 
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="   password:"
+        android:id="@+id/passwordInput"
+        android:inputType="text" 
+        />
+    <Button
+        android:text="Sign Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+        android:background="@android:color/holo_blue_bright"
+        android:id="@+id/signUpButton" 
+        />
+    <TextView
+        android:text="Invalid Input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textSize="50px"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/error" />
+    <Button
+        android:text="Already Have An Acoount? Log In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginButton" />
+    
+
+
+</LinearLayout>

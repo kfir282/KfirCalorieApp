@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960449558515",
+    "project_id": "kfircalories",
+    "storage_bucket": "kfircalories.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960449558515:android:46251b4bbf238def57c486",
+        "android_client_info": {
+          "package_name": "kfir.calories"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCqVtSnh7PDssbBXxp232E06N06OnW9kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

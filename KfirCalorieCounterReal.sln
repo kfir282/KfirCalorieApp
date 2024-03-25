@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KfirCalorieCounterReal", "KfirCalorieCounterReal.csproj", "{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C1F334-8E47-4ADC-BD85-E44A066CD46B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EEA3749-779A-481D-BA4C-2DC0CFED56EA}
+	EndGlobalSection
+EndGlobal
