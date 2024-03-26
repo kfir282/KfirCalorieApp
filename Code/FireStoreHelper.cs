@@ -44,6 +44,20 @@ namespace KfirCalorieCounterReal.Code
             return thisUser;
         }
 
+        public static async void SetUser(User user)
+        {
+            Init();
+
+            HashMap map = new HashMap();
+            map.Put("name", user.GetName());
+            map.Put("email", user.GetEmail());
+            map.Put("password", user.GetPassword());
+            
+
+            DocumentReference newDoc = DataBase.Collection("users").Document(user.GetEmail());
+
+
+        }
 
         public static void Init()
         {
