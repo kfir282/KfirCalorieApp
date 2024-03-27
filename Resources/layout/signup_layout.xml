@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100px"
-        android:text="    username:"
+        android:hint="    username:"
         android:id="@+id/nameInput"
         android:inputType="text" 
         />
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100px"
-        android:text="   email:"
+        android:hint="   email:"
         android:id="@+id/emailInput"
         android:inputType="text" 
         />
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100px"
-        android:text="   password:"
+        android:hint="   password:"
         android:id="@+id/passwordInput"
         android:inputType="text" 
         />

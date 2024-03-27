@@ -40,7 +40,11 @@ namespace KfirCalorieCounterReal
             error.Visibility = ViewStates.Invisible;
             string email = emailInput.Text;
             string password = passwordInput.Text;
-
+            if(email.Length == 0 ||  password.Length == 0)
+            {
+                error.Visibility= ViewStates.Visible;
+                return;
+            }
             User user =  await FireStoreHelper.GetUser(email);
             if(user == null)
             {

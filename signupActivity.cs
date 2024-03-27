@@ -6,6 +6,8 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase;
 using Firebase.Firestore;
+using KfirCalorieCounterReal.Code;
+using KfirCalorieCounterReal.objects;
 namespace KfirCalorieCounterReal
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
@@ -50,14 +52,19 @@ namespace KfirCalorieCounterReal
 
         private void SignUpButtonClick(object sender, System.EventArgs e)
         {
+            string username = usernameInput.Text;
+            string email = emailInput.Text;
+            string password = passwordInput.Text;
             if(usernameInput.Text.Length == 0 || emailInput.Text.Length == 0 || passwordInput.Text.Length == 0)
             {
                 error.Visibility = Android.Views.ViewStates.Visible;
                 return;
             }
 
-            //create user object
-            //save user in database?
+
+            //REVIEW_CHANGE
+            User newUser = new User(username, email, password);
+            FireStoreHelper.SaveUser(newUser);
 
 
 

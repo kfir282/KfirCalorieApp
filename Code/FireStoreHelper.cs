@@ -44,17 +44,18 @@ namespace KfirCalorieCounterReal.Code
             return thisUser;
         }
 
-        public static async void SetUser(User user)
+        public static void SaveUser(User user)
         {
             Init();
 
             HashMap map = new HashMap();
-            map.Put("name", user.GetName());
+            map.Put("username", user.GetName());
             map.Put("email", user.GetEmail());
             map.Put("password", user.GetPassword());
             
-
-            DocumentReference newDoc = DataBase.Collection("users").Document(user.GetEmail());
+            //REVIEW_CHANGE
+            DocumentReference newDocPointer = DataBase.Collection("users").Document(user.GetEmail()); // point to an imaginary doc (it doesnt exist yet)
+            newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
 
 
         }
