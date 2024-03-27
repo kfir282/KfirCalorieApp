@@ -68,6 +68,8 @@
     <Compile Include="Code\objects\Day.cs" />
     <Compile Include="Code\objects\Food.cs" />
     <Compile Include="Code\objects\User.cs" />
+    <Compile Include="customfoodActivity.cs" />
+    <Compile Include="foodaddActivity.cs" />
     <Compile Include="homeActivity.cs" />
     <Compile Include="loginActivity.cs" />
     <Compile Include="signupActivity.cs" />
@@ -140,6 +142,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\home_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\customfood_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\addfood_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

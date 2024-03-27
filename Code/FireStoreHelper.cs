@@ -21,6 +21,7 @@ using Java.Util.Functions;
 using static Android.Media.TV.TvContract.Programs;
 using static Java.Util.Jar.Attributes;
 using KfirCalorieCounterReal.objects;
+using Android.Gms.Extensions;
 
 
 namespace KfirCalorieCounterReal.Code
@@ -44,6 +45,7 @@ namespace KfirCalorieCounterReal.Code
             return thisUser;
         }
 
+
         public static void SaveUser(User user)
         {
             Init();
@@ -66,12 +68,31 @@ namespace KfirCalorieCounterReal.Code
             HashMap map = new HashMap();
             map.Put("name", food.Name);
             map.Put("calories", food.Cal);
-            map.Put("proetin", food.Pro);
+            map.Put("protein", food.Pro);
             //REVIEW_CHANGE
             DocumentReference newDocPointer = DataBase.Collection("food").Document(food.Name); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
         }
+        
+        public async static Task<List<Food>> GetAllFoods()
+        {
+            Init();
+            CollectionReference foods = DataBase.Collection("food");
 
+            QuerySnapshot snap = await foods.Get().AsAsync<QuerySnapshot>();
+            List<Food> foodsList = new List<Food>();
+            foreach (DocumentSnapshot foodSnapshot in snap.Documents) 
+            {
+                var data = foodSnapshot.Data;
+                string name = (string)data["name"];
+                int calories = (int)data["calories"];
+                int protein = (int)data["protein"];
+                Food thisFood = new Food(name, calories, protein);
+                foodsList.Add(thisFood);
+            }
+            return foodsList;
+
+        }
         public static void Init()
         {
             DataBase = signupActivity.DataBase;

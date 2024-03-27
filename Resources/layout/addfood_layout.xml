@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <TextView
+        android:text="add food to"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:minWidth="100px"
+        android:id="@+id/title" />
+    
+
+        <GridView
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="70dp"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="1500px"
+            android:id="@+id/gridView" 
+            android:numColumns="3"
+        
+        />
+
+
+
+
+    <Button
+        android:layout_marginTop="25px"
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        android:text="Create Custom Food"
+        android:id="@+id/createfoodButton"
+        />
+
+
+</LinearLayout>

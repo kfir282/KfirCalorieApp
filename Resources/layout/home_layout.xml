@@ -13,9 +13,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50px"
+        android:layout_marginTop="30px"
         android:minWidth="100px"
-        android:minHeight=""
         android:id="@+id/valuesDisplay" />
     <TextView
         android:text="x - y = z"
@@ -26,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         android:minWidth="100px"
-        android:minHeight=""
         android:id="@+id/values" />
     
     <TextView
@@ -41,7 +39,19 @@
     <HorizontalScrollView
             android:layout_width="match_parent"
             android:background="@android:color/background_dark"
-            android:layout_height="300px">
+            android:layout_height="300px"
+            android:id="@+id/breakfastScroll"
+        >
+        <Button
+            android:text="תרנגול ב50 שח"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_marginLeft="30px"
+            android:id="@+id/button1" />
+
+
 
         </HorizontalScrollView>
     <Button
@@ -50,7 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         android:id="@+id/brakefastButton"
-        android:background="@android:color/holo_blue_bright"/>
+        android:background="@android:color/holo_blue_bright"
+    
+        
+        />
      <TextView
         android:text="Lunch:"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -63,7 +76,9 @@
     <HorizontalScrollView
             android:layout_width="match_parent"
             android:background="@android:color/background_dark"
-            android:layout_height="300px">
+            android:layout_height="300px"
+         android:id="@+id/lunchScroll"
+        >
 
         </HorizontalScrollView>
     <Button
@@ -87,7 +102,10 @@
     <HorizontalScrollView
             android:layout_width="match_parent"
             android:background="@android:color/background_dark"
-            android:layout_height="300px">
+            android:layout_height="300px"
+            android:id="@+id/dinnerScroll"
+       
+        >
 
         </HorizontalScrollView>
     <Button

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <TextView
+        android:text="create custom food"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:minWidth="100px"
+        android:id="@+id/title" />
+    
+        
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200px"
+        android:hint="    FOOD NAME:"
+        android:id="@+id/nameInput"
+        android:inputType="text" 
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+        android:hint="   CALORIES TO 100G:"
+        android:id="@+id/caloriesInput"
+        android:inputType="number" 
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+        android:hint="   PROTEIN TO 100G:"
+        android:id="@+id/proteinInput"
+        android:inputType="number" 
+        />
+
+    
+
+    <Button
+        android:layout_marginTop="255px"
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        android:text="Add Custom Food"
+        android:id="@+id/addButton"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:text="Invalid Input!"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="invisible"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/error"
+        />
+        
+</LinearLayout>

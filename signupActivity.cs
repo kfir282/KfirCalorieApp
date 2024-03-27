@@ -57,7 +57,8 @@ namespace KfirCalorieCounterReal
             string email = emailInput.Text;
             string password = passwordInput.Text;
             string calorieGoal = caloriesInput.Text;
-            if(usernameInput.Text.Length == 0 || emailInput.Text.Length == 0 || passwordInput.Text.Length == 0)
+            
+            if(usernameInput.Text.Length == 0 || emailInput.Text.Length == 0 || passwordInput.Text.Length == 0 || caloriesInput.Text.Length == 0)
             {
                 error.Visibility = Android.Views.ViewStates.Visible;
                 return;
