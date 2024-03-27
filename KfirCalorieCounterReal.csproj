@@ -68,6 +68,7 @@
     <Compile Include="Code\objects\Day.cs" />
     <Compile Include="Code\objects\Food.cs" />
     <Compile Include="Code\objects\User.cs" />
+    <Compile Include="homeActivity.cs" />
     <Compile Include="loginActivity.cs" />
     <Compile Include="signupActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

@@ -52,9 +52,11 @@ namespace KfirCalorieCounterReal
             }
             else
             {
-                if (password == user.GetPassword())
+                if (password == user.Password)
                 {
-                    // log in
+                    User.thisUser = user;
+                    Intent intent = new Intent(this , typeof(homeActivity));
+                    StartActivity(intent);
                 }
                 else {
                     error.Text = "Invalid Password";

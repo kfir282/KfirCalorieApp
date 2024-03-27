@@ -49,15 +49,27 @@ namespace KfirCalorieCounterReal.Code
             Init();
 
             HashMap map = new HashMap();
-            map.Put("username", user.GetName());
-            map.Put("email", user.GetEmail());
-            map.Put("password", user.GetPassword());
-            map.Put("calories", user.GetCalorieGoal());
+            map.Put("username", user.Name);
+            map.Put("email", user.Name);
+            map.Put("password", user.Name);
+            map.Put("calorie goal", user.CalorieGoal);
             //REVIEW_CHANGE
-            DocumentReference newDocPointer = DataBase.Collection("users").Document(user.GetEmail()); // point to an imaginary doc (it doesnt exist yet)
+            DocumentReference newDocPointer = DataBase.Collection("users").Document(user.Email); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
 
 
+        }
+        public static void SaveFood(Food food)
+        {
+            Init();
+
+            HashMap map = new HashMap();
+            map.Put("name", food.Name);
+            map.Put("calories", food.Cal);
+            map.Put("proetin", food.Pro);
+            //REVIEW_CHANGE
+            DocumentReference newDocPointer = DataBase.Collection("food").Document(food.Name); // point to an imaginary doc (it doesnt exist yet)
+            newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
         }
 
         public static void Init()
@@ -92,7 +104,7 @@ namespace KfirCalorieCounterReal.Code
                             string email = (string)documentData["email"];
                             string username = (string)documentData["username"];
                             string password = (string)documentData["password"];
-                            int calorieGoal = (int)documentData["calories"];
+                            int calorieGoal = (int)documentData["calorie goal"];
                             User thisUser = new User(username, email, password, calorieGoal);
                             finalBox.SetResult(thisUser);
                         }

@@ -18,7 +18,8 @@ namespace KfirCalorieCounterReal.objects
         private string password;
         private int calorieGoal;
         private Day currentDay;
-        private List<Day> saved; 
+        private List<Day> saved;
+        public static User thisUser;
 
         public User(string name, string email, string password, int calorieGoal)
         {
@@ -30,9 +31,11 @@ namespace KfirCalorieCounterReal.objects
             this.calorieGoal = calorieGoal;
         }
 
-        public string GetPassword() {  return this.password; }
-        public string GetName() { return this.name; }
-        public string GetEmail() { return this.email; }
-        public int GetCalorieGoal() {  return this.calorieGoal; }
+        public string Name { get => name; set => name = value; }
+        public string Email { get => email; set => email = value; }
+        public string Password { get => password; set => password = value; }
+        public int CalorieGoal { get => calorieGoal; set => calorieGoal = value; }
+        public Day CurrentDay { get => currentDay; set => currentDay = value; }
+        public List<Day> Saved { get => saved; set => saved = value; }
     }
 }

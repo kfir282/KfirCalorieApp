@@ -66,7 +66,9 @@ namespace KfirCalorieCounterReal
             //REVIEW_CHANGE
             User newUser = new User(username, email, password, int.Parse(calorieGoal));
             FireStoreHelper.SaveUser(newUser);
-
+            User.thisUser = newUser;
+            Intent intent = new Intent(this, typeof(homeActivity));
+            StartActivity(intent);
 
 
         }
