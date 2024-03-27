@@ -15,7 +15,7 @@ namespace KfirCalorieCounterReal
     {
         public static FirebaseFirestore DataBase;
 
-        private EditText usernameInput, emailInput, passwordInput;
+        private EditText usernameInput, emailInput, passwordInput, caloriesInput;
         private Button signUpButton, loginbutton;
         private TextView error;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -36,6 +36,7 @@ namespace KfirCalorieCounterReal
             usernameInput = FindViewById<EditText>(Resource.Id.nameInput);
             emailInput = FindViewById<EditText>(Resource.Id.emailInput);
             passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
+            caloriesInput = FindViewById<EditText>(Resource.Id.caloriesInput);
             error = FindViewById<TextView>(Resource.Id.error);
             
             signUpButton.Click += SignUpButtonClick;
@@ -55,15 +56,15 @@ namespace KfirCalorieCounterReal
             string username = usernameInput.Text;
             string email = emailInput.Text;
             string password = passwordInput.Text;
+            string calorieGoal = caloriesInput.Text;
             if(usernameInput.Text.Length == 0 || emailInput.Text.Length == 0 || passwordInput.Text.Length == 0)
             {
                 error.Visibility = Android.Views.ViewStates.Visible;
                 return;
             }
 
-
             //REVIEW_CHANGE
-            User newUser = new User(username, email, password);
+            User newUser = new User(username, email, password, int.Parse(calorieGoal));
             FireStoreHelper.SaveUser(newUser);
 
 

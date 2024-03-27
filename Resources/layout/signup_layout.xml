@@ -41,6 +41,14 @@
         android:id="@+id/passwordInput"
         android:inputType="text" 
         />
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:hint="   calorie goal:"
+        android:id="@+id/caloriesInput"
+        android:inputType="number" 
+        />
     <Button
         android:text="Sign Up"
         android:layout_width="match_parent"

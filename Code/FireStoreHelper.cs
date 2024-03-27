@@ -52,6 +52,8 @@ namespace KfirCalorieCounterReal.Code
             map.Put("username", user.GetName());
             map.Put("email", user.GetEmail());
             map.Put("password", user.GetPassword());
+            
+            //REVIEW_CHANGE
             DocumentReference newDocPointer = DataBase.Collection("users").Document(user.GetEmail()); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
 
@@ -90,8 +92,8 @@ namespace KfirCalorieCounterReal.Code
                             string email = (string)documentData["email"];
                             string username = (string)documentData["username"];
                             string password = (string)documentData["password"];
-
-                            User thisUser = new User(username, email, password);
+                            int calorieGoal = (int)documentData["calories"];
+                            User thisUser = new User(username, email, password, calorieGoal);
                             finalBox.SetResult(thisUser);
                         }
                         else
