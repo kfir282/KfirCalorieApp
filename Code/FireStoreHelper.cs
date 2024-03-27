@@ -52,8 +52,6 @@ namespace KfirCalorieCounterReal.Code
             map.Put("username", user.GetName());
             map.Put("email", user.GetEmail());
             map.Put("password", user.GetPassword());
-            
-            //REVIEW_CHANGE
             DocumentReference newDocPointer = DataBase.Collection("users").Document(user.GetEmail()); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
 

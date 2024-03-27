@@ -16,13 +16,13 @@ namespace KfirCalorieCounterReal.objects
     {
         private List<Food> brakefast;
         private List<Food> lunch;
-        private List<Food> supper;
+        private List<Food> dinner;
 
         public Day()
         {
             this.brakefast = new List<Food>();
             this.lunch = new List<Food>();
-            this.supper = new List<Food>();
+            this.dinner = new List<Food>();
         }
     }
 }

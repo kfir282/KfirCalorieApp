@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+        
+    <TextView
+        android:text="Brakefast:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/brakefast" />
+    <Button
+        android:text="Add food"
+        android:layout_width="150"
+        android:layout_height="40"
+        android:layout_marginTop="100"
+        android:background="@android:color/holo_blue_bright""
+        android:id="@+id/brakefastButton" />
+    <TextView
+        android:text="Lunch:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/lunch" />
+    <Button
+        android:text="Add food"
+        android:layout_width="150"
+        android:layout_height="40"
+        android:layout_marginTop="100"
+        android:background="@android:color/holo_blue_bright""
+        android:id="@+id/lunchButton" />
+    <TextView
+        android:text="Dinner:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/dinner" />
+    <Button
+        android:text="Add food"
+        android:layout_width="150"
+        android:layout_height="40"
+        android:layout_marginTop="100"
+        android:background="@android:color/holo_blue_bright""
+        android:id="@+id/lunchButton" />
+
+
+
+
+</LinearLayout>
