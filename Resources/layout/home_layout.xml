@@ -1,58 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <TextView
+        android:text="goal -  consumed = left"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50px"
+        android:minWidth="100px"
+        android:minHeight=""
+        android:id="@+id/valuesDisplay" />
+    <TextView
+        android:text="x - y = z"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:minWidth="100px"
+        android:minHeight=""
+        android:id="@+id/values" />
     
-        
     <TextView
         android:text="Brakefast:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150"
+        android:layout_marginTop="60px"
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/brakefast" />
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:background="@android:color/background_dark"
+            android:layout_height="300px">
+
+        </HorizontalScrollView>
     <Button
         android:text="Add food"
-        android:layout_width="150"
-        android:layout_height="40"
-        android:layout_marginTop="100"
-        android:background="@android:color/holo_blue_bright""
-        android:id="@+id/brakefastButton" />
-    <TextView
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:id="@+id/brakefastButton"
+        android:background="@android:color/holo_blue_bright"/>
+     <TextView
         android:text="Lunch:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30"
+        android:layout_marginTop="30px"
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/lunch" />
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:background="@android:color/background_dark"
+            android:layout_height="300px">
+
+        </HorizontalScrollView>
     <Button
         android:text="Add food"
-        android:layout_width="150"
-        android:layout_height="40"
-        android:layout_marginTop="100"
-        android:background="@android:color/holo_blue_bright""
-        android:id="@+id/lunchButton" />
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:background="@android:color/holo_blue_bright"
+        android:id= "@+id/lunchButton" 
+       />
     <TextView
         android:text="Dinner:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30"
+        android:layout_marginTop="30px"
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/dinner" />
+
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:background="@android:color/background_dark"
+            android:layout_height="300px">
+
+        </HorizontalScrollView>
     <Button
         android:text="Add food"
-        android:layout_width="150"
-        android:layout_height="40"
-        android:layout_marginTop="100"
-        android:background="@android:color/holo_blue_bright""
-        android:id="@+id/dinnerButton" />
+        android:layout_width="300px"
+        android:layout_height="150px"
+        android:layout_marginTop="10px"
+        android:background="@android:color/holo_blue_bright"
+        android:id= "@+id/dinnerButton"
+        />
+    
 
 
 
