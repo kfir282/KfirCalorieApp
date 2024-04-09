@@ -72,6 +72,7 @@
     <Compile Include="foodaddActivity.cs" />
     <Compile Include="homeActivity.cs" />
     <Compile Include="loginActivity.cs" />
+    <Compile Include="selectamountActivity.cs" />
     <Compile Include="signupActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\addfood_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\select_amount_layout.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

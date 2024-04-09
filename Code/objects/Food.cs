@@ -24,6 +24,12 @@ namespace KfirCalorieCounterReal.objects
             this.name = name;
             this.cal = cal;
             this.pro = pro;
+        }
+        public Food(Food other, double amount)
+        {
+            this.name = other.name;
+            this.cal = (int)((amount / 100) * other.Cal);
+            this.pro = (int)((amount / 100) * other.Pro);
 
         }
 

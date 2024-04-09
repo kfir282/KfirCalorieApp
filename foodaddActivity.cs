@@ -20,39 +20,40 @@ namespace KfirCalorieCounterReal
         Button createFoodButton;
         TextView title;
         ListView foodListView;
-        public static List<Food> allFoods = new List<Food>();
 
+        public static List<Food> allFoods = new List<Food>();
+        public static string whatMeal;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
+          
             SetContentView(Resource.Layout.addfood_layout);
 
             title = FindViewById<TextView>(Resource.Id.title);
             createFoodButton = FindViewById<Button>(Resource.Id.createfoodButton);
 
 
-            string where = Intent.GetStringExtra("meal");
-            title.Text = title.Text + " " + where;
+            whatMeal = Intent.GetStringExtra("meal");
+            title.Text = title.Text + " " + whatMeal;
             
-            // TODO: get all foods from database
+
+            
             if(allFoods.Count == 0)
             {
                 allFoods = await FireStoreHelper.GetAllFoods();
             }
-            
+
+            // SHOW TO USER
+
             GridView grid = FindViewById<GridView>(Resource.Id.gridView);
-            GridAdapter adapter = new GridAdapter(this, allFoods);
+            
+
+            GridAdapter adapter = new GridAdapter(allFoods, this);
+            
+            GridAdapter.SetInstance(adapter);
+
             grid.Adapter = adapter;
-/*            grid.OnItemClickListener = new EventHandler<AdapterView.ItemClickEventArgs>((sender, e) =>
-            {
-                // Handle item click here
-                int position = e.Position;
-                // You can get the item from the adapter using the position
-                // For example:
-                // var clickedItem = adapter.GetItem(position);
-                // Do something with the clicked item
-            });*/
+
             createFoodButton.Click += delegate
             {
                 Intent create = new Intent(this, typeof(customfoodActivity));
@@ -60,22 +61,36 @@ namespace KfirCalorieCounterReal
             };
 
         }
-    }
+    
 
+        public static Food GetFoodByName(string name)
+        {
+            foreach(Food food in allFoods)
+            {
+                if(food.Name == name) return food;
+            }
+            return null;
+        }
+    }
     class GridAdapter : BaseAdapter<Food>
     {
         public static GridAdapter Instance; 
-        private readonly List<Food> items;
-        private readonly Context context;
 
-        public GridAdapter(Context context, List<Food> items)
+        private List<Food> items;
+        private foodaddActivity activity;
+
+        public GridAdapter(List<Food> items, foodaddActivity thisActivity)
         {
-            this.context = context;
             this.items = items;
-            Instance = this;
+            this.activity = thisActivity;
+        }
+        public static void SetInstance(GridAdapter thisInstance)
+        {
+            GridAdapter.Instance = thisInstance;
         }
 
         public override int Count => items.Count;
+
 
         public override Food this[int position] => items[position];
 
@@ -91,7 +106,7 @@ namespace KfirCalorieCounterReal
             }
             else
             {
-                thisButton = new Button(context)
+                thisButton = new Button(activity)
                 {
                     LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent),
                    
@@ -105,11 +120,19 @@ namespace KfirCalorieCounterReal
             thisButton.Text = items[position].Name;
             thisButton.Click += delegate
             {
-                // TODO: add food selection (grams)
-                // and after selection add to meal
-                // and after adding to meal add to total calories
-            };
+                string thisFoodName = thisButton.Text;
+                string thisMealType = foodaddActivity.whatMeal;
 
+                Intent intent = new Intent(activity, typeof(selectamountActivity));
+                intent.PutExtra("food", thisFoodName);
+                intent.PutExtra("meal", thisMealType);
+
+                activity.StartActivity(intent);
+                activity.Finish();
+            };
+            // TODO: add food selection (grams)
+            // and after selection add to meal
+            // and after adding to meal add to total calories
             return thisButton;
         }
     }

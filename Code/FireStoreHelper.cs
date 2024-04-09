@@ -52,8 +52,8 @@ namespace KfirCalorieCounterReal.Code
 
             HashMap map = new HashMap();
             map.Put("username", user.Name);
-            map.Put("email", user.Name);
-            map.Put("password", user.Name);
+            map.Put("email", user.Email);
+            map.Put("password", user.Password);
             map.Put("calorie goal", user.CalorieGoal);
             //REVIEW_CHANGE
             DocumentReference newDocPointer = DataBase.Collection("users").Document(user.Email); // point to an imaginary doc (it doesnt exist yet)
@@ -77,16 +77,22 @@ namespace KfirCalorieCounterReal.Code
         public async static Task<List<Food>> GetAllFoods()
         {
             Init();
+            
             CollectionReference foods = DataBase.Collection("food");
 
             QuerySnapshot snap = await foods.Get().AsAsync<QuerySnapshot>();
+
+
             List<Food> foodsList = new List<Food>();
-            foreach (DocumentSnapshot foodSnapshot in snap.Documents) 
+            foreach (DocumentSnapshot food in snap.Documents) 
             {
-                var data = foodSnapshot.Data;
-                string name = (string)data["name"];
-                int calories = (int)data["calories"];
-                int protein = (int)data["protein"];
+                var data = food.Data;
+
+                string name = (string) data["name"];
+
+                int calories = (int) data["calories"];
+
+                int protein = (int) data["protein"];
                 Food thisFood = new Food(name, calories, protein);
                 foodsList.Add(thisFood);
             }
