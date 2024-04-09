@@ -42,9 +42,17 @@ namespace KfirCalorieCounterReal
             }
             
             GridView grid = FindViewById<GridView>(Resource.Id.gridView);
-            grid.Adapter = new GridAdapter(this, allFoods);
-
-
+            GridAdapter adapter = new GridAdapter(this, allFoods);
+            grid.Adapter = adapter;
+/*            grid.OnItemClickListener = new EventHandler<AdapterView.ItemClickEventArgs>((sender, e) =>
+            {
+                // Handle item click here
+                int position = e.Position;
+                // You can get the item from the adapter using the position
+                // For example:
+                // var clickedItem = adapter.GetItem(position);
+                // Do something with the clicked item
+            });*/
             createFoodButton.Click += delegate
             {
                 Intent create = new Intent(this, typeof(customfoodActivity));
