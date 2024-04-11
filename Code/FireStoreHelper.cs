@@ -77,22 +77,16 @@ namespace KfirCalorieCounterReal.Code
         public async static Task<List<Food>> GetAllFoods()
         {
             Init();
-            
             CollectionReference foods = DataBase.Collection("food");
 
             QuerySnapshot snap = await foods.Get().AsAsync<QuerySnapshot>();
-
-
             List<Food> foodsList = new List<Food>();
-            foreach (DocumentSnapshot food in snap.Documents) 
+            foreach (DocumentSnapshot foodSnapshot in snap.Documents) 
             {
-                var data = food.Data;
-
-                string name = (string) data["name"];
-
-                int calories = (int) data["calories"];
-
-                int protein = (int) data["protein"];
+                var data = foodSnapshot.Data;
+                string name = (string)data["name"];
+                int calories = (int)data["calories"];
+                int protein = (int)data["protein"];
                 Food thisFood = new Food(name, calories, protein);
                 foodsList.Add(thisFood);
             }

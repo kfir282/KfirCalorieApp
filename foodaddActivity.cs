@@ -20,42 +20,38 @@ namespace KfirCalorieCounterReal
         Button createFoodButton;
         TextView title;
         ListView foodListView;
-
         public static List<Food> allFoods = new List<Food>();
-        public static string whatMeal;
-        public static foodaddActivity InstanceActivity;
-        public static string debugValue;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-          
+            
             SetContentView(Resource.Layout.addfood_layout);
 
             title = FindViewById<TextView>(Resource.Id.title);
             createFoodButton = FindViewById<Button>(Resource.Id.createfoodButton);
 
 
-            whatMeal = Intent.GetStringExtra("meal");
-            title.Text = title.Text + " " + whatMeal;
+            string where = Intent.GetStringExtra("meal");
+            title.Text = title.Text + " " + where;
             
-            foodaddActivity.InstanceActivity = this;
-            
+            // TODO: get all foods from database
             if(allFoods.Count == 0)
             {
                 allFoods = await FireStoreHelper.GetAllFoods();
             }
-
-            // SHOW TO USER
-
+            
             GridView grid = FindViewById<GridView>(Resource.Id.gridView);
-            
-
-            GridAdapter adapter = new GridAdapter(allFoods);
-            
-            GridAdapter.SetInstance(adapter);
-
+            GridAdapter adapter = new GridAdapter(this, allFoods);
             grid.Adapter = adapter;
-
+/*            grid.OnItemClickListener = new EventHandler<AdapterView.ItemClickEventArgs>((sender, e) =>
+            {
+                // Handle item click here
+                int position = e.Position;
+                // You can get the item from the adapter using the position
+                // For example:
+                // var clickedItem = adapter.GetItem(position);
+                // Do something with the clicked item
+            });*/
             createFoodButton.Click += delegate
             {
                 Intent create = new Intent(this, typeof(customfoodActivity));
@@ -63,57 +59,22 @@ namespace KfirCalorieCounterReal
             };
             debugValue = "finished oncreate";
         }
-    
-
-        public static Food GetFoodByName(string name)
-        {
-            foreach(Food food in allFoods)
-            {
-                if(food.Name == name) return food;
-            }
-            return null;
-        }
-/*        public void StartSelect(object sender, EventArgs e, string foodName)
-        {
-            Intent intent = new Intent(this, typeof(foodaddActivity));
-            intent.PutExtra("food", foodName);
-            intent.PutExtra("meal", whatMeal);
-            StartActivity(intent);
-            Finish();
-            Dispose();
-
-        }*/
-
-        internal void StartSelect(object sender, EventArgs e)
-        {
-            Console.WriteLine(debugValue);
-            Button b = (Button)sender;
-            string text = b.Text;
-            Intent intent = new Intent(InstanceActivity, typeof(selectamountActivity));
-            intent.PutExtra("food", text);
-            intent.PutExtra("meal", whatMeal);
-            StartActivity(intent);
-            Finish();
-            Dispose();
-        }
     }
+
     class GridAdapter : BaseAdapter<Food>
     {
         public static GridAdapter Instance; 
+        private readonly List<Food> items;
+        private readonly Context context;
 
-        private List<Food> items;
-
-        public GridAdapter(List<Food> items)
+        public GridAdapter(Context context, List<Food> items)
         {
+            this.context = context;
             this.items = items;
-        }
-        public static void SetInstance(GridAdapter thisInstance)
-        {
-            GridAdapter.Instance = thisInstance;
+            Instance = this;
         }
 
         public override int Count => items.Count;
-
 
         public override Food this[int position] => items[position];
 
@@ -129,7 +90,7 @@ namespace KfirCalorieCounterReal
             }
             else
             {
-                thisButton = new Button(foodaddActivity.InstanceActivity)
+                thisButton = new Button(context)
                 {
                     LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent),
                    
@@ -141,10 +102,13 @@ namespace KfirCalorieCounterReal
                 thisButton.SetHeight(300);
             }
             thisButton.Text = items[position].Name;
-            thisButton.Click += foodaddActivity.InstanceActivity.StartSelect;
-            // TODO: add food selection (grams)
-            // and after selection add to meal
-            // and after adding to meal add to total calories
+            thisButton.Click += delegate
+            {
+                // TODO: add food selection (grams)
+                // and after selection add to meal
+                // and after adding to meal add to total calories
+            };
+
             return thisButton;
         }
     }

@@ -17,7 +17,7 @@ namespace KfirCalorieCounterReal
     {
         TextView error;
         EditText nameInput, caloriesInput, proteinInput;
-        Button addFoodButton;
+        Button addFood;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -31,8 +31,8 @@ namespace KfirCalorieCounterReal
             caloriesInput = FindViewById<EditText>(Resource.Id.caloriesInput);
             proteinInput = FindViewById<EditText>(Resource.Id.proteinInput);
 
-            addFoodButton = FindViewById<Button>(Resource.Id.addButton);
-            addFoodButton.Click += AddFood_Click;
+            addFood = FindViewById<Button>(Resource.Id.addButton);
+            addFood.Click += AddFood_Click;
 
         }
 
@@ -48,7 +48,6 @@ namespace KfirCalorieCounterReal
                 return;
             }
             Food thisFood = new Food(name, int.Parse(calories), int.Parse(protein));
-            
             foodaddActivity.allFoods.Add(thisFood);
             FireStoreHelper.SaveFood(thisFood);
             GridAdapter.Instance.NotifyDataSetChanged();
