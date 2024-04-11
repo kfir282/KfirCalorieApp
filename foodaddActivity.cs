@@ -21,7 +21,7 @@ namespace KfirCalorieCounterReal
         Button createFoodButton;
         TextView title;
         ListView foodListView;
-
+        SearchView search;
         public static List<Food> allFoods = new List<Food>();
         public static string whatMeal;
         public static foodaddActivity instanceActivity;
@@ -33,27 +33,30 @@ namespace KfirCalorieCounterReal
             instanceActivity = this;
             title = FindViewById<TextView>(Resource.Id.title);
             createFoodButton = FindViewById<Button>(Resource.Id.createfoodButton);
-
+            search = FindViewById<SearchView>(Resource.Id.search);
 
             whatMeal = Intent.GetStringExtra("meal");
             title.Text = title.Text + " " + whatMeal;
 
 
-
+            search.QueryTextChange += Search_Text_Changed;
             if (allFoods.Count == 0)
             {
                 allFoods = await FireStoreHelper.GetAllFoods();
             }
 
             // SHOW TO USER
+            foodListView = FindViewById<ListView>(Resource.Id.foodView);
+            foodListView.Adapter = new ListAdapter(allFoods, this);
 
-            GridView grid = FindViewById<GridView>(Resource.Id.gridView);
+
+/*            GridView grid = FindViewById<GridView>(Resource.Id.gridView);
 
             GridAdapter adapter = new GridAdapter(allFoods, this, grid);
 
             GridAdapter.SetInstance(adapter);
 
-            grid.Adapter = adapter;
+            grid.Adapter = adapter;*/
 
             createFoodButton.Click += delegate
             {
@@ -62,6 +65,19 @@ namespace KfirCalorieCounterReal
             };
 
 
+        }
+
+        private void Search_Text_Changed(object sender, SearchView.QueryTextChangeEventArgs e)
+        {
+            if(e.NewText.Length <= 0) 
+            {
+                ListAdapter.Instance.Items = allFoods;
+                ListAdapter.Instance.NotifyDataSetChanged();
+                return;
+            }
+            allFoods.Where(food => food.Name.Contains(e.NewText));
+            ListAdapter.Instance.Items = allFoods.Where(food => food.Name.ToLower().Contains(e.NewText.ToLower())).ToList();
+            ListAdapter.Instance.NotifyDataSetChanged();
         }
 
         public static Food GetFoodByName(string name)
@@ -73,8 +89,84 @@ namespace KfirCalorieCounterReal
             return null;
         }
     }
-    class ListAdap
-    class GridAdapter : BaseAdapter<Food>
+    class ListAdapter : BaseAdapter<Food>
+    {
+
+        private List<Food> items;
+        private foodaddActivity activity;
+        public static ListAdapter Instance;
+
+
+        public ListAdapter(List<Food> items, foodaddActivity thisActivity)
+        {
+            this.Items = items;
+            this.activity = thisActivity;
+            Instance = this;
+            // Set item click listener for the grid view
+
+        }
+
+        public override Food this[int position] => Items[position];
+
+        public override int Count => Items.Count;
+
+        public List<Food> Items { get => items; set => items = value; }
+
+        public override long GetItemId(int position)
+        {
+            return position;
+        }
+
+        public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
+        {
+            Button thisButton;
+
+            if (convertView != null)
+            {
+                thisButton = (Button)convertView;
+            }
+            else
+            {
+                thisButton = new Button(activity)
+                {
+                    LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent),
+                };
+                thisButton.SetTextColor(Color.Black);
+                thisButton.SetPadding(16, 16, 16, 16);
+                thisButton.SetWidth(300);
+                thisButton.SetHeight(300);
+            }
+            thisButton.Click += OnItemClick;
+            thisButton.Text = Items[position].Name;
+            return thisButton;
+        }
+        private void OnItemClick(object sender, EventArgs e)
+        {
+            if (activity == null)
+            {
+                return;
+            }
+            try
+            {
+                Button thisButton = (Button)sender;
+                string thisFoodName = thisButton.Text;
+                string thisMealType = foodaddActivity.whatMeal;
+
+                Intent intent = new Intent(activity, typeof(selectamountActivity));
+                intent.PutExtra("food", thisFoodName);
+                intent.PutExtra("meal", thisMealType);
+
+                activity.StartActivity(intent);
+            }
+            catch (Exception ex)
+            {
+
+                return;
+            }
+
+        }
+    }
+/*    class GridAdapter : BaseAdapter<Food>
     {
         public static GridAdapter Instance;
 
@@ -155,7 +247,7 @@ namespace KfirCalorieCounterReal
         }
 
     }
-
+*/
 
 
 }

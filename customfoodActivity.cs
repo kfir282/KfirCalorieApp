@@ -47,10 +47,19 @@ namespace KfirCalorieCounterReal
                 error.Visibility = ViewStates.Visible;
                 return;
             }
+
+            var existingWithName = foodaddActivity.allFoods.Where((food) => food.Name == name);
+            if(existingWithName.Count() > 0)
+            {
+                error.Text = "Food Name Exists!";
+                error.Visibility = ViewStates.Visible;
+                return;
+            }
             Food thisFood = new Food(name, int.Parse(calories), int.Parse(protein));
             foodaddActivity.allFoods.Add(thisFood);
+
             FireStoreHelper.SaveFood(thisFood);
-            GridAdapter.Instance.NotifyDataSetChanged();
+            ListAdapter.Instance.NotifyDataSetChanged();
             Finish();
         }
     }
