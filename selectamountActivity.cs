@@ -63,15 +63,15 @@ namespace KfirCalorieCounterReal
             // 200 - 10g
             if(mealType == "breakfast")
             {
-                HomeManager.Instance.AddToBreakfast(thisFood, amount);
+                User.Instance.CurrentDay.AddToBreakfast(thisFood, amount);
             }
             if(mealType == "lunch")
             {
-                HomeManager.Instance.AddToLunch(thisFood, amount);
+                User.Instance.CurrentDay.AddToLunch(thisFood, amount);
             }
             if (mealType == "dinner")
             {
-                HomeManager.Instance.AddToDinner(thisFood, amount);
+                User.Instance.CurrentDay.AddToDinner(thisFood, amount);
             }
             Intent intent = new Intent(this, typeof(homeActivity));
             StartActivity(intent);

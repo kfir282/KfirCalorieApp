@@ -54,7 +54,7 @@ namespace KfirCalorieCounterReal
             {
                 if (password == user.Password)
                 {
-                    User.thisUser = user;
+                    User.Instance = user;
                     Intent intent = new Intent(this , typeof(homeActivity));
                     StartActivity(intent);
                 }

@@ -73,6 +73,7 @@ namespace KfirCalorieCounterReal
             return null;
         }
     }
+    class ListAdap
     class GridAdapter : BaseAdapter<Food>
     {
         public static GridAdapter Instance;

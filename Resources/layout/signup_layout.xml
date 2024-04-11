@@ -41,6 +41,8 @@
         android:id="@+id/passwordInput"
         android:inputType="text" 
         />
+
+
         <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,11 +51,16 @@
         android:id="@+id/caloriesInput"
         android:inputType="number" 
         />
-    <Button
-        android:text="Sign Up"
+        <CheckBox
+        android:text="Remember Me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150px"
+        android:id="@+id/remember" />
+    <Button
+        android:text="Sign Up"
+        android:layout_width="900px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
         android:background="@android:color/holo_blue_bright"
         android:id="@+id/signUpButton" 
         />

@@ -68,7 +68,6 @@
     <Compile Include="Code\objects\Day.cs" />
     <Compile Include="Code\objects\Food.cs" />
     <Compile Include="Code\objects\User.cs" />
-    <Compile Include="Code\HomeManager.cs" />
     <Compile Include="customfoodActivity.cs" />
     <Compile Include="foodaddActivity.cs" />
     <Compile Include="homeActivity.cs" />
@@ -80,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
+    <None Include=".editorconfig" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />

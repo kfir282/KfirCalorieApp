@@ -16,12 +16,13 @@ using Android.Gms.Tasks;
 using Java.Interop;
 using System;
 using Firebase;
-
+using JavaObjectExtensions = Java.Interop.JavaObjectExtensions;
 using Java.Util.Functions;
 using static Android.Media.TV.TvContract.Programs;
 using static Java.Util.Jar.Attributes;
 using KfirCalorieCounterReal.objects;
 using Android.Gms.Extensions;
+using Newtonsoft.Json;
 
 
 namespace KfirCalorieCounterReal.Code
@@ -55,6 +56,7 @@ namespace KfirCalorieCounterReal.Code
             map.Put("email", user.Email);
             map.Put("password", user.Password);
             map.Put("calorie goal", user.CalorieGoal);
+            map.Put("days", new ArrayList());
             //REVIEW_CHANGE
             DocumentReference newDocPointer = DataBase.Collection("users").Document(user.Email); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
@@ -73,7 +75,49 @@ namespace KfirCalorieCounterReal.Code
             DocumentReference newDocPointer = DataBase.Collection("food").Document(food.Name); // point to an imaginary doc (it doesnt exist yet)
             newDocPointer.Set(map); // create the actual doc (first it was a pointer, now its an actual doc that exists).
         }
-        
+        public static void AddDay(Day day, User user)
+        {
+            Init();
+            DocumentReference docRef = DataBase.Collection("users").Document(user.Email);
+            var thisDay = new HashMap();
+            
+            
+            thisDay.Put("breakfast", ParseFoodList(day.Breakfast));
+
+
+            thisDay.Put("lunch", ParseFoodList(day.Lunch));
+
+            thisDay.Put("dinner", ParseFoodList(day.Dinner));
+
+
+            thisDay.Put("calories", day.CaloriesEaten);
+            thisDay.Put("protein", day.ProteinEaten);
+            thisDay.Put("title", day.Title);
+
+            var updates = new Dictionary<string, Java.Lang.Object>
+            {
+                { "days", FieldValue.ArrayUnion(thisDay)}
+            };
+            docRef.Update(updates);
+
+        }
+
+        public static ArrayList ParseFoodList(List<Food> list)
+        {
+            ArrayList result = new ArrayList();
+            foreach (var food in list)
+            {
+                HashMap thisFood = new HashMap();
+                thisFood.Put("name", food.Name);
+                thisFood.Put("calories", food.Cal);
+                thisFood.Put("protein", food.Pro);
+                result.Add(thisFood);
+            }
+            return result;
+
+        }
+
+
         public async static Task<List<Food>> GetAllFoods()
         {
             Init();
@@ -85,8 +129,8 @@ namespace KfirCalorieCounterReal.Code
             {
                 var data = foodSnapshot.Data;
                 string name = (string)data["name"];
-                int calories = (int)data["calories"];
-                int protein = (int)data["protein"];
+                int calories = Convert.ToInt32(data["calories"]);
+                int protein = Convert.ToInt32(data["protein"]);
                 Food thisFood = new Food(name, calories, protein);
                 foodsList.Add(thisFood);
             }
@@ -125,8 +169,19 @@ namespace KfirCalorieCounterReal.Code
                             string email = (string)documentData["email"];
                             string username = (string)documentData["username"];
                             string password = (string)documentData["password"];
-                            int calorieGoal = (int)documentData["calorie goal"];
-                            User thisUser = new User(username, email, password, calorieGoal);
+                            int calorieGoal = Convert.ToInt32(documentData["calorie goal"]);
+
+                            List<Day> days = new List<Day>();
+                            //get the fucking days
+                            Java.Lang.Object daysFromDB = documentData["days"];
+                            if(daysFromDB != null)
+                            {
+                                JavaList javaDays = (JavaList)documentData["days"];
+
+                                 days = ParseDays(javaDays);
+
+                            }
+                            User thisUser = new User(username, email, password, calorieGoal, days);
                             finalBox.SetResult(thisUser);
                         }
                         else
@@ -143,6 +198,44 @@ namespace KfirCalorieCounterReal.Code
                 {
                     finalBox.SetResult(null);
                 }
+            }
+        
+            private List<Day> ParseDays(JavaList days)
+            {
+                List<Day> daysList = new List<Day>();
+                foreach(JavaDictionary d in days)
+                {
+                    JavaList breakfastJava = (JavaList)d["breakfast"];
+                    JavaList lunchJava = (JavaList)d["lunch"];
+                    JavaList dinnerJava = (JavaList)d["dinner"];
+
+                    List<Food> breakfast = ParseMeal(breakfastJava);
+                    List<Food> lunch = ParseMeal(lunchJava);
+                    List<Food> dinner = ParseMeal(dinnerJava);
+
+                    int calories = Convert.ToInt32(d["calories"]);
+                    int protein = Convert.ToInt32(d["protein"]);
+                    string title = (string)d["title"];
+
+                    Day day = new Day(title, breakfast, lunch, dinner, calories, protein);
+                    daysList.Add(day);
+                }
+                return daysList;
+            }
+
+            private List<Food> ParseMeal(JavaList meal)
+            {
+                List<Food> result = new List<Food>();
+                foreach(JavaDictionary item in meal)
+                {
+
+                    int calories = Convert.ToInt32(item["calories"]);
+                    int protein = Convert.ToInt32(item["protein"]);
+                    string name = (string)item["name"];
+                    result.Add(new Food(name, calories, protein));  
+
+                }
+                return result;
             }
         }
     }

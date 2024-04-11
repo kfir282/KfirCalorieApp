@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Preferences;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
@@ -18,21 +19,35 @@ namespace KfirCalorieCounterReal
         private EditText usernameInput, emailInput, passwordInput, caloriesInput;
         private Button signUpButton, loginbutton;
         private TextView error;
-        protected override void OnCreate(Bundle savedInstanceState)
+        private CheckBox rememberBox;
+        private ISharedPreferences sharedPreferences;
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState); //tamid 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState); //tamid
             FirebaseApp.InitializeApp(this);
-            SetContentView(Resource.Layout.signup_layout);
 
             signupActivity.DataBase = FirebaseFirestore.Instance;
+            sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
 
+            // check if we remember him
+            string email = sharedPreferences.GetString("email", "");
+            if(email != "")
+            {
+                // we remember him
+                User thisUser = await FireStoreHelper.GetUser(email);
+                User.Instance = thisUser;
+                Intent intent = new Intent(this, typeof(homeActivity));
+                StartActivity(intent);
+                return;
 
+            }
+            SetContentView(Resource.Layout.signup_layout);
 
             signUpButton = FindViewById<Button>(Resource.Id.signUpButton);
             loginbutton = FindViewById<Button>(Resource.Id.loginButton);
 
-
+            rememberBox = FindViewById<CheckBox>(Resource.Id.remember);
             usernameInput = FindViewById<EditText>(Resource.Id.nameInput);
             emailInput = FindViewById<EditText>(Resource.Id.emailInput);
             passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
@@ -64,10 +79,21 @@ namespace KfirCalorieCounterReal
                 return;
             }
 
-            //REVIEW_CHANGE
+            
             User newUser = new User(username, email, password, int.Parse(calorieGoal));
+            
+            
+            //remember him
+            if(rememberBox.Checked )
+            {
+                var editor = sharedPreferences.Edit();
+                editor.PutString("username", username);
+                editor.PutString("email", email);
+                editor.PutString("password", password);
+                editor.Apply();
+            }
             FireStoreHelper.SaveUser(newUser);
-            User.thisUser = newUser;
+            User.Instance = newUser;
             Intent intent = new Intent(this, typeof(homeActivity));
             StartActivity(intent);
 

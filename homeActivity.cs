@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Nfc;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -23,7 +24,7 @@ namespace KfirCalorieCounterReal
         public static homeActivity Instance;
 
         public List<Food> breakfastList, lunchList, dinnerList;
-
+        public List<Day> savedDays;
         public int totalCalories, totalProtein;
         public int calorieGoal;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -32,10 +33,6 @@ namespace KfirCalorieCounterReal
 
             SetContentView(Resource.Layout.home_layout);
             InitValues();
-            if(HomeManager.Instance == null)
-            {
-                new HomeManager();
-            }
             UpdateFromManager();
         }
         public void InitValues()
@@ -43,7 +40,7 @@ namespace KfirCalorieCounterReal
             Instance = this;
             daysGrid = FindViewById<GridLayout>(Resource.Id.daysGrid);
             values = FindViewById<TextView>(Resource.Id.values);
-
+            saveDayButton = FindViewById<Button>(Resource.Id.save);
             breakfastList = new List<Food>();
             lunchList = new List<Food>();
             dinnerList = new List<Food>();
@@ -62,18 +59,69 @@ namespace KfirCalorieCounterReal
 
             totalCalories = 0;
             totalProtein = 0;
-            calorieGoal = User.thisUser.CalorieGoal;
+            calorieGoal = User.Instance.CalorieGoal;
+            saveDayButton.Click += SaveDayButton_Click;
         }
-        
+
+        private void SaveDayButton_Click(object sender, EventArgs e)
+        {
+            //prompt for name
+            int daysAmount = User.Instance.Saved.Count;
+
+            string dayTitle = "day number " + (daysAmount + 1);
+            User.Instance.CurrentDay.Title = dayTitle;
+            User.Instance.SaveCurrentDay();
+            Intent newIntent = new Intent (this, typeof(homeActivity));
+            StartActivity(newIntent);
+        }
+
         public void UpdateFromManager()
         {
-            breakfastList = HomeManager.Instance.Breakfast;
-            lunchList = HomeManager.Instance.Lunch;
-            dinnerList = HomeManager.Instance.Dinner;
-            totalCalories = HomeManager.Instance.CaloriesEaten;
-            totalProtein = HomeManager.Instance.ProteinEaten;
+            breakfastList = User.Instance.CurrentDay.Breakfast;
+            lunchList = User.Instance.CurrentDay.Lunch;
+            dinnerList = User.Instance.CurrentDay.Dinner;
+            totalCalories = User.Instance.CurrentDay.CaloriesEaten;
+            totalProtein = User.Instance.CurrentDay.ProteinEaten;
+            savedDays = User.Instance.Saved;
             UpdateScrolls();
             UpdateTitle();
+            UpdateSavedDays();
+        }
+
+        private void UpdateSavedDays()
+        {
+            /*
+             *         <Button
+            android:text="Button1"
+            android:layout_margin="20px"
+
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/bu124tton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+             */
+            foreach (Day day in savedDays)
+            {
+                Button thisDayButton = new Button(this)
+                {
+                    Text = day.Title,
+                    LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent)
+                };
+                thisDayButton.SetPadding(20,20,20,20);
+                thisDayButton.Click += DayButton_Click;
+                daysGrid.AddView(thisDayButton);
+            }
+        }
+
+        private void DayButton_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            string dayName = button.Text;
+            Day thisDay = User.Instance.GetDay(dayName);
+            User.Instance.CurrentDay = thisDay;
+            Intent newIntent = new Intent(this, typeof(homeActivity));
+            StartActivity(newIntent);
         }
 
         private void UpdateScrolls()
@@ -125,7 +173,11 @@ namespace KfirCalorieCounterReal
         }
 
 
+        public static Button RenderDayButton(Day day)
+        {
 
+            return null;
+        }
 
         public static Button RenderButton(string foodName)
         {

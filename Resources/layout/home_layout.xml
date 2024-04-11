@@ -26,7 +26,7 @@
         android:id="@+id/values" />
 
     <TextView
-        android:text="Brakefast:"
+        android:text="Breakfast:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,32 +155,8 @@
         android:layout_gravity="center"
         android:id="@+id/daysGrid"
         >
-        <Button
-            android:text="Button3"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:id="@+id/button1"
-            android:layout_margin="20px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:text="Button2"
-            android:minWidth="25px"
-            android:minHeight="25px"
-                        android:layout_margin="20px"
 
-            android:id="@+id/button121"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:text="Button1"
-            android:layout_margin="20px"
 
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:id="@+id/bu124tton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         
     </GridLayout>
