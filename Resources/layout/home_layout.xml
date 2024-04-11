@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    >
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:text="goal -  consumed = left"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:minWidth="100px"
-        android:id="@+id/valuesDisplay" />
+
     <TextView
         android:text="x - y = z"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
@@ -26,7 +24,7 @@
         android:layout_marginTop="10px"
         android:minWidth="100px"
         android:id="@+id/values" />
-    
+
     <TextView
         android:text="Brakefast:"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -37,23 +35,25 @@
         android:minHeight="25px"
         android:id="@+id/brakefast" />
     <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:background="@android:color/background_dark"
-            android:layout_height="300px"
-            android:id="@+id/breakfastScroll"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:id="@+id/breakfastScroll"
+       
         >
-        <Button
-            android:text="תרנגול ב50 שח"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_marginLeft="30px"
-            android:id="@+id/button1" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/breakfastLinear" >
+
+
+        </LinearLayout>
 
 
 
-        </HorizontalScrollView>
+    </HorizontalScrollView>
     <Button
         android:text="Add food"
         android:layout_width="300px"
@@ -64,7 +64,7 @@
     
         
         />
-     <TextView
+    <TextView
         android:text="Lunch:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
@@ -74,13 +74,20 @@
         android:minHeight="25px"
         android:id="@+id/lunch" />
     <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:background="@android:color/background_dark"
-            android:layout_height="300px"
-         android:id="@+id/lunchScroll"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:id="@+id/lunchScroll"
         >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/lunchLinear" />
 
-        </HorizontalScrollView>
+
+    </HorizontalScrollView>
     <Button
         android:text="Add food"
         android:layout_width="300px"
@@ -100,14 +107,20 @@
         android:id="@+id/dinner" />
 
     <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:background="@android:color/background_dark"
-            android:layout_height="300px"
-            android:id="@+id/dinnerScroll"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:id="@+id/dinnerScroll"
        
         >
-
-        </HorizontalScrollView>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/dinnerLinear" />
+        
+    </HorizontalScrollView>
     <Button
         android:text="Add food"
         android:layout_width="300px"
@@ -116,9 +129,60 @@
         android:background="@android:color/holo_blue_bright"
         android:id= "@+id/dinnerButton"
         />
-    
+    <Button
+        android:text="SAVE THIS DAY"
+        android:layout_width="500px"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_marginTop="10px"
+        android:id="@+id/save" />
 
 
+    <TextView
+        android:text="Past Days:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60px"
+        android:minWidth="25px"
+        android:minHeight="25px"
+/>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:columnCount="3"
+        android:layout_gravity="center"
+        android:id="@+id/daysGrid"
+        >
+        <Button
+            android:text="Button3"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/button1"
+            android:layout_margin="20px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="Button2"
+            android:minWidth="25px"
+            android:minHeight="25px"
+                        android:layout_margin="20px"
 
+            android:id="@+id/button121"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="Button1"
+            android:layout_margin="20px"
 
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/bu124tton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        
+    </GridLayout>
 </LinearLayout>
+</ScrollView>

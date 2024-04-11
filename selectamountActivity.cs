@@ -45,6 +45,7 @@ namespace KfirCalorieCounterReal
 
             gramsInput.TextChanged += GramsInput_TextChanged;
             addButton.Click += AddButton_Click;
+            foodaddActivity.instanceActivity.Finish();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -62,27 +63,18 @@ namespace KfirCalorieCounterReal
             // 200 - 10g
             if(mealType == "breakfast")
             {
-                homeActivity.addToBreakfast(thisFood, amount);
-                Finish();
-                Dispose();
-                return;
+                HomeManager.Instance.AddToBreakfast(thisFood, amount);
             }
             if(mealType == "lunch")
             {
-                homeActivity.addToLunch(thisFood, amount);
-                Finish();
-                Dispose();
-                return;
-
+                HomeManager.Instance.AddToLunch(thisFood, amount);
             }
             if (mealType == "dinner")
             {
-                homeActivity.addToLunch(thisFood, amount);
-                Finish();
-                Dispose();
-                return;
+                HomeManager.Instance.AddToDinner(thisFood, amount);
             }
-            Finish();
+            Intent intent = new Intent(this, typeof(homeActivity));
+            StartActivity(intent);
         }
 
         private void GramsInput_TextChanged(object sender, Android.Text.TextChangedEventArgs e)

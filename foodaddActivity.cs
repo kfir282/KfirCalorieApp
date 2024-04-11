@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Firebase.Firestore.Core;
 using KfirCalorieCounterReal.Code;
 using KfirCalorieCounterReal.objects;
 using System;
@@ -20,97 +21,138 @@ namespace KfirCalorieCounterReal
         Button createFoodButton;
         TextView title;
         ListView foodListView;
+
         public static List<Food> allFoods = new List<Food>();
+        public static string whatMeal;
+        public static foodaddActivity instanceActivity;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
-            SetContentView(Resource.Layout.addfood_layout);
 
+            SetContentView(Resource.Layout.addfood_layout);
+            instanceActivity = this;
             title = FindViewById<TextView>(Resource.Id.title);
             createFoodButton = FindViewById<Button>(Resource.Id.createfoodButton);
 
 
-            string where = Intent.GetStringExtra("meal");
-            title.Text = title.Text + " " + where;
-            
-            // TODO: get all foods from database
-            if(allFoods.Count == 0)
+            whatMeal = Intent.GetStringExtra("meal");
+            title.Text = title.Text + " " + whatMeal;
+
+
+
+            if (allFoods.Count == 0)
             {
                 allFoods = await FireStoreHelper.GetAllFoods();
             }
-            
+
+            // SHOW TO USER
+
             GridView grid = FindViewById<GridView>(Resource.Id.gridView);
-            GridAdapter adapter = new GridAdapter(this, allFoods);
+
+            GridAdapter adapter = new GridAdapter(allFoods, this, grid);
+
+            GridAdapter.SetInstance(adapter);
+
             grid.Adapter = adapter;
-/*            grid.OnItemClickListener = new EventHandler<AdapterView.ItemClickEventArgs>((sender, e) =>
-            {
-                // Handle item click here
-                int position = e.Position;
-                // You can get the item from the adapter using the position
-                // For example:
-                // var clickedItem = adapter.GetItem(position);
-                // Do something with the clicked item
-            });*/
+
             createFoodButton.Click += delegate
             {
                 Intent create = new Intent(this, typeof(customfoodActivity));
                 StartActivity(create);
             };
-            debugValue = "finished oncreate";
+
+
+        }
+
+        public static Food GetFoodByName(string name)
+        {
+            foreach (Food food in allFoods)
+            {
+                if (food.Name == name) return food;
+            }
+            return null;
         }
     }
-
     class GridAdapter : BaseAdapter<Food>
     {
-        public static GridAdapter Instance; 
-        private readonly List<Food> items;
-        private readonly Context context;
+        public static GridAdapter Instance;
 
-        public GridAdapter(Context context, List<Food> items)
+        private List<Food> items;
+        private foodaddActivity activity;
+        private GridView gridView;
+
+        public GridAdapter(List<Food> items, foodaddActivity thisActivity, GridView gridView)
         {
-            this.context = context;
             this.items = items;
-            Instance = this;
+            this.activity = thisActivity;
+
+            this.gridView = gridView;
+
+            // Set item click listener for the grid view
+
+        }
+        public static void SetInstance(GridAdapter thisInstance)
+        {
+            GridAdapter.Instance = thisInstance;
         }
 
         public override int Count => items.Count;
+
 
         public override Food this[int position] => items[position];
 
         public override long GetItemId(int position) => position;
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
         {
-            // convert  view is for memory. if it is not null, we can use it. if it is - we need to create a new one.
             Button thisButton;
+
             if (convertView != null)
             {
-                thisButton = (Button) convertView;
+                thisButton = (Button)convertView;
             }
             else
             {
-                thisButton = new Button(context)
+                thisButton = new Button(activity)
                 {
                     LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent),
-                   
-                       
                 };
                 thisButton.SetTextColor(Color.Black);
                 thisButton.SetPadding(16, 16, 16, 16);
                 thisButton.SetWidth(300);
                 thisButton.SetHeight(300);
             }
+            thisButton.Click += OnItemClick;
             thisButton.Text = items[position].Name;
-            thisButton.Click += delegate
-            {
-                // TODO: add food selection (grams)
-                // and after selection add to meal
-                // and after adding to meal add to total calories
-            };
-
             return thisButton;
         }
+
+        private void OnItemClick(object sender, EventArgs e)
+        {
+            if(activity == null)
+            {
+                return;
+            }
+            try
+            {
+                Button thisButton = (Button)sender;
+                string thisFoodName = thisButton.Text;
+                string thisMealType = foodaddActivity.whatMeal;
+
+                Intent intent = new Intent(activity, typeof(selectamountActivity));
+                intent.PutExtra("food", thisFoodName);
+                intent.PutExtra("meal", thisMealType);
+
+                activity.StartActivity(intent);
+            }
+            catch (Exception ex)
+            {
+
+                return;
+            }
+
+        }
+
     }
 
 
