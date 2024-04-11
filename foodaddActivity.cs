@@ -23,6 +23,8 @@ namespace KfirCalorieCounterReal
 
         public static List<Food> allFoods = new List<Food>();
         public static string whatMeal;
+        public static foodaddActivity InstanceActivity;
+        public static string debugValue;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,7 +38,7 @@ namespace KfirCalorieCounterReal
             whatMeal = Intent.GetStringExtra("meal");
             title.Text = title.Text + " " + whatMeal;
             
-
+            foodaddActivity.InstanceActivity = this;
             
             if(allFoods.Count == 0)
             {
@@ -48,7 +50,7 @@ namespace KfirCalorieCounterReal
             GridView grid = FindViewById<GridView>(Resource.Id.gridView);
             
 
-            GridAdapter adapter = new GridAdapter(allFoods, this);
+            GridAdapter adapter = new GridAdapter(allFoods);
             
             GridAdapter.SetInstance(adapter);
 
@@ -59,7 +61,7 @@ namespace KfirCalorieCounterReal
                 Intent create = new Intent(this, typeof(customfoodActivity));
                 StartActivity(create);
             };
-
+            debugValue = "finished oncreate";
         }
     
 
@@ -71,18 +73,39 @@ namespace KfirCalorieCounterReal
             }
             return null;
         }
+/*        public void StartSelect(object sender, EventArgs e, string foodName)
+        {
+            Intent intent = new Intent(this, typeof(foodaddActivity));
+            intent.PutExtra("food", foodName);
+            intent.PutExtra("meal", whatMeal);
+            StartActivity(intent);
+            Finish();
+            Dispose();
+
+        }*/
+
+        internal void StartSelect(object sender, EventArgs e)
+        {
+            Console.WriteLine(debugValue);
+            Button b = (Button)sender;
+            string text = b.Text;
+            Intent intent = new Intent(InstanceActivity, typeof(selectamountActivity));
+            intent.PutExtra("food", text);
+            intent.PutExtra("meal", whatMeal);
+            StartActivity(intent);
+            Finish();
+            Dispose();
+        }
     }
     class GridAdapter : BaseAdapter<Food>
     {
         public static GridAdapter Instance; 
 
         private List<Food> items;
-        private foodaddActivity activity;
 
-        public GridAdapter(List<Food> items, foodaddActivity thisActivity)
+        public GridAdapter(List<Food> items)
         {
             this.items = items;
-            this.activity = thisActivity;
         }
         public static void SetInstance(GridAdapter thisInstance)
         {
@@ -106,7 +129,7 @@ namespace KfirCalorieCounterReal
             }
             else
             {
-                thisButton = new Button(activity)
+                thisButton = new Button(foodaddActivity.InstanceActivity)
                 {
                     LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.MatchParent),
                    
@@ -118,18 +141,7 @@ namespace KfirCalorieCounterReal
                 thisButton.SetHeight(300);
             }
             thisButton.Text = items[position].Name;
-            thisButton.Click += delegate
-            {
-                string thisFoodName = thisButton.Text;
-                string thisMealType = foodaddActivity.whatMeal;
-
-                Intent intent = new Intent(activity, typeof(selectamountActivity));
-                intent.PutExtra("food", thisFoodName);
-                intent.PutExtra("meal", thisMealType);
-
-                activity.StartActivity(intent);
-                activity.Finish();
-            };
+            thisButton.Click += foodaddActivity.InstanceActivity.StartSelect;
             // TODO: add food selection (grams)
             // and after selection add to meal
             // and after adding to meal add to total calories

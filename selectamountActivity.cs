@@ -64,12 +64,14 @@ namespace KfirCalorieCounterReal
             {
                 homeActivity.addToBreakfast(thisFood, amount);
                 Finish();
+                Dispose();
                 return;
             }
             if(mealType == "lunch")
             {
                 homeActivity.addToLunch(thisFood, amount);
                 Finish();
+                Dispose();
                 return;
 
             }
@@ -77,6 +79,7 @@ namespace KfirCalorieCounterReal
             {
                 homeActivity.addToLunch(thisFood, amount);
                 Finish();
+                Dispose();
                 return;
             }
             Finish();
